@@ -4,23 +4,25 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
-      href="{{ url_for('static', filename='style.css')}}"
+      href="{{ url_for('static', filename='dist/output.css')}}"
       rel="stylesheet"
     />
     <title>Libraries</title>
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
     <h1>Libraries</h1>
-    <button class="HomeView" onclick="location.href='/'">Back</button>
-    <table>
+    <button class="HomeView px-4 py-2 bg-gray-200 rounded hover:bg-gray-300" onclick="location.href='/'">Back</button>
+    <br>
     {% for key, value in libraries.items() %}
-      <tr>
-        <th>{{ key }}</th>
+      <div class="relative group mb-4 inline-block">
+        <button class="library-button px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">{{ key }}</button>
+        <div class="absolute left-0 mt-2 hidden group-hover:block bg-white border border-gray-300 p-2 rounded shadow-md z-10">
           {% for item in value %}
-            <td>{{ item }}</td>
+            <div class="text-sm text-gray-800 hover:text-black whitespace-nowrap">{{ item }}</div>
           {% endfor %}
-      </tr>
+        </div>
+      </div>
     {% endfor %}
-    </table>
   </body>
 </html>

@@ -4,13 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
-      href="{{ url_for('static', filename='style.css')}}"
+      href="{{ url_for('static', filename='dist/output.css')}}"
       rel="stylesheet"
     />
     <title>Add Photo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
     <h1>Add Photo</h1>
     <button class="HomeView" onclick="location.href='/'">Back</button>
+    <form action="/Photo" method="post" enctype="multipart/form-data">
+      <label for="PhotoDrop">Select Picture</label><br>
+      <input type="text" id="Library" name="Library">
+      <input type="file" id="PhotoDrop" name="PhotoDrop">
+      <input type="submit" id="submit">
+    </form>
   </body>
 </html>
