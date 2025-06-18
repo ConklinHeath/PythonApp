@@ -24,5 +24,3 @@ def photo():
 
 if __name__ in "__main__":
     app.run(debug=True)
-
-#updated line
