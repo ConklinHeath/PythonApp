@@ -21,7 +21,7 @@ def book():
     allLibraries = File.read_file('library.txt')
     libraryObj = json.loads(allLibraries)
     print(libraryObj)
-    return render_template("library.html", libraries=libraryObj)
+    return render_template("book.html", libraries=libraryObj)
 
 @app.route("/Photo")
 def photo():
