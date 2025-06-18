@@ -12,5 +12,15 @@
   <body>
     <h1>Books</h1>
     <button class="HomeView" onclick="location.href='/'">Back</button>
+    <table>
+    {% for key, value in libraries.items() %}
+      {% for item in value %}
+        <tr>
+          <th>{{ item }}</th>
+          <td>{{ key }}</td>
+        </tr>
+      {% endfor %}
+    {% endfor %}
+    </table>
   </body>
 </html>
