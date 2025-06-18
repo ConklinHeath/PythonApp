@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="{{ url_for('static', filename='style.css')}}"
+      rel="stylesheet"
+    />
+    <title>My App</title>
+  </head>
+  <body>
+    <h1>Hello yall</h1>
+    <button class="LibraryView" onclick="location.href='/Library'">
+      View All Libaries
+    </button>
+    <button class="BookView" onclick="location.href='/Books'">
+      View All Books
+    </button>
+    <button class="AddPic" onclick="location.href='/Photo'">Add Picture</button>
+  </body>
+</html>
