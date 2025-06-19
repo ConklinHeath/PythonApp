@@ -126,7 +126,7 @@ def grab_json_data():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute("SELECT library_name, books_json, latitude, longitude FROM libraries")
     result = cursor.fetchall()
-    libraries = {row["library_name"]: json.loads(row["books_json"]) for row in result}
+    libraries = {row["library_name"]: [json.loads(row["books_json"]), row['latitude'], row['longitude']] for row in result}
     return libraries
 
 mysql = MySQL(app)
