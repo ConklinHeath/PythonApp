@@ -10,14 +10,20 @@
     <title>My App</title>
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body>
-    <h1>Hello yall</h1>
-    <button class="LibraryView" onclick="location.href='/Library'">
-      View All Libaries
-    </button>
-    <button class="BookView" onclick="location.href='/Books'">
-      View All Books
-    </button>
-    <button class="AddPic" onclick="location.href='/Photo'">Add Picture</button>
+  <body class="bg-green-200">
+    <div class="flex flex-col items-center justify-center h-screen space-y-6">
+      <h1 class="font-bold text-[20px]">Hello yall</h1>
+        <div class="flex flex-row space-x-4">
+        <button class="LibraryView px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600" onclick="location.href='/Library'">
+          View All Libaries
+        </button>
+        <button class="BookView px-10 py-2 bg-green-500 text-white rounded hover:bg-green-600" onclick="location.href='/Books'">
+          View All Books
+        </button>
+        <button class="AddPic px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600" onclick="location.href='/Photo'">
+          Add Picture
+        </button>
+      </div>
+    </div>
   </body>
 </html>

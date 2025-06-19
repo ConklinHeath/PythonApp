@@ -10,19 +10,24 @@
     <title>Libraries</title>
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body>
-    <h1>Libraries</h1>
-    <button class="HomeView px-4 py-2 bg-gray-200 rounded hover:bg-gray-300" onclick="location.href='/'">Back</button>
-    <br>
-    {% for key, value in libraries.items() %}
-      <div class="relative group mb-4 inline-block">
-        <button class="library-button px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">{{ key }}</button>
-        <div class="absolute left-0 mt-2 hidden group-hover:block bg-white border border-gray-300 p-2 rounded shadow-md z-10">
-          {% for item in value %}
-            <div class="text-sm text-gray-800 hover:text-black whitespace-nowrap">{{ item }}</div>
-          {% endfor %}
-        </div>
+  <body class="bg-green-200">
+    <div class="flex flex-col items-center justify-center h-screen space-y-6">
+      <h1 class="font-bold text-[20px]">Libraries</h1>
+      <button class="HomeView px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600" onclick="location.href='/'">
+        Back
+      </button>
+      <div class="flex flex-row space-x-4 flex-wrap">
+        {% for key, value in libraries.items() %}
+          <div class="relative group mb-4 inline-block">
+            <button class="library-button px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">{{ key }}</button>
+            <div class="absolute left-0 mt-2 hidden group-hover:block bg-white border border-gray-300 p-2 rounded shadow-md z-10">
+              {% for item in value %}
+                <div class="text-sm text-gray-800 hover:text-black whitespace-nowrap">{{ item }}</div>
+              {% endfor %}
+            </div>
+          </div>
+        {% endfor %}
       </div>
-    {% endfor %}
+    </div>
   </body>
 </html>

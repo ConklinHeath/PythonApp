@@ -10,14 +10,43 @@
     <title>Add Photo</title>
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body>
-    <h1>Add Photo</h1>
-    <button class="HomeView" onclick="location.href='/'">Back</button>
-    <form action="/Photo" method="post" enctype="multipart/form-data">
-      <label for="PhotoDrop">Select Picture</label><br>
-      <input type="text" id="Library" name="Library">
-      <input type="file" id="PhotoDrop" name="PhotoDrop">
-      <input type="submit" id="submit">
-    </form>
+  <body class="bg-green-200">
+  <script>
+    window.onload = function() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function (position) {
+            document.getElementById("latitude").value = position.coords.latitude;
+            document.getElementById("longitude").value = position.coords.longitude;
+        }, function (error) {
+        console.error("Geolocation error:", error);
+        });
+      } else {
+        console.error("Geolocation not supported");
+      }
+    };
+  </script>
+  <div class="flex flex-col items-center justify-center h-screen space-y-6">
+    <h1 class="font-bold text-[20px]">Add Photo</h1>
+      <button class="HomeView px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600" onclick="location.href='/'">
+        Back
+      </button>
+      <form action="/Photo" method="post" enctype="multipart/form-data">
+        <div class="flex flex-col">
+          <div class="bg-green-300 rounded p-1">
+            <label class="bg-green-300" for="Library">Library Name: </label>
+            <input class="bg-green-200" type="text" id="Library" name="Library" required>
+          </div>
+        <br>
+        <div class="flex flex-col items-center justify-center rounded">
+          <label class="bg-green-300 rounded p-1" for="PhotoDrop">Select Picture: </label>
+          <input class="bg-green-300 rounded p-1" type="file" id="PhotoDrop" name="PhotoDrop" required>
+        </div>
+        <br>
+          <input type="hidden" name="latitude" id="latitude" required>
+          <input type="hidden" name="longitude" id="longitude" required>
+        <input class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600" type="submit" id="submit">
+        </div>
+      </form>
+    </div>
   </body>
 </html>
