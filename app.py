@@ -3,6 +3,8 @@ import math
 import openai
 import requests
 from flask import *
+from geopy.distance import geodesic
+
 import File
 from PIL import Image
 import io
@@ -11,6 +13,7 @@ import base64
 import json
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
+from geopy import *
 
 app = Flask(__name__)
 
@@ -30,7 +33,7 @@ def index():
     print("libraryObj")
     return render_template("index.html")
 
-@app.route("/Library")
+@app.route("/Library", methods=['POST', 'GET'])
 def library():
     return render_template("library.html", libraries=grab_json_data())
 
@@ -60,7 +63,7 @@ def photo():
         cursor.execute("SELECT library_name, books_json, latitude, longitude FROM libraries")
         result = cursor.fetchall()
 
-        dist_new_library = 0.001
+        dist_new_library = 0.0000
         i = 0
         current_i = 0
         min_dist = math.inf
@@ -108,19 +111,28 @@ def chatbot(img):
 
 def parse_data(data):
     data = data.replace("\n", "")
-    data.split("%")
-    titles = []
+    entries = []
     start = False
     current = ""
     for char in data:
         if char == "%":
             if start:
-                titles.append(current)
+                # We're closing an entry
+                if current == "NONE":
+                    entries.append({"title": "NONE"})
+                else:
+                    if "," in current:
+                        parts = current.split(",", 1)
+                        title = parts[0].strip()
+                        entries.append({"title": title})
+                    else:
+                        entries.append({"title": current.strip()})
                 current = ""
             start = not start
         elif start:
             current += char
-    return titles
+    return entries
+
 
 def grab_json_data():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)

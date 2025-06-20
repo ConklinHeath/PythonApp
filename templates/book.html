@@ -10,8 +10,8 @@
     <title>Books</title>
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body class="bg-green-200">
-    <div class="flex flex-col items-center justify-center h-screen space-y-6">
+  <body class="bg-green-200 min-h-screen overflow-y-auto">
+    <div class="flex flex-col items-center justify-center space-y-6">
     <h1 class="font-bold text-[20px]">Books</h1>
     <button class="HomeView px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600" onclick="location.href='/'">
         Back
@@ -25,21 +25,74 @@
         {% for key, value in libraries.items() %}
           {% for item in value[0] %}
             <tr>
-              {% if item == 'NONE' %}
+              {% if item['title'] == 'NONE' %}
                 <th class="text-sm text-gray-800 hover:text-black whitespace-nowrap bg-red-200 font-normal">
                   <button onclick="window.open('https://www.google.com/maps?q={{ value[1] }},{{ value[2] }}', '_blank')" class="book-button bg-red-200 text-black rounded hover:bg-red-300 p-1">Unknown Book In Library</button>
                 </th>
                 {% else %}
                 <th class="text-sm text-gray-800 hover:text-black whitespace-nowrap font-normal">
-                  <button onclick="window.open('https://www.google.com/maps?q={{ value[1] }},{{ value[2] }}', '_blank')" class="book-button bg-green-300 text-black rounded hover:bg-green-600 p-1">{{ item }}</button>
+                  <button onclick="window.open('https://www.google.com/maps?q={{ value[1] }},{{ value[2] }}', '_blank')" class="book-button bg-green-300 text-black rounded hover:bg-green-600 p-1">{{ item['title'] }}</button>
                 </th>
                 {% endif %}
-              <td class="text-center">{{ key }}</td>
+              <td class="text-center">
+                <div class="group relative inline-block">
+                  <button
+                          onclick="window.open('https://www.google.com/maps?q={{ value[1] }},{{ value[2] }}', '_blank')"
+                          class="book-button text-black rounded hover:bg-green-600 p-1 text-sm text-gray-800 hover:text-black whitespace-nowrap">{{ key }}</button>
+                  <div
+                          data-lat="{{ value[1] }}"
+                          data-lon="{{ value[2] }}"
+                          data-key="{{ key }}"
+                          id="distanceDisplay{{ loop.index }}"
+                          class="absolute whitespace-nowrap left-0 mt-2 hidden group-hover:block bg-white border border-gray-300 p-2 rounded shadow-md z-10">Loading...</div>
+                </div>
+              </td>
             </tr>
           {% endfor %}
         {% endfor %}
         </table>
       </div>
     </div>
+    <script>
+      function toRadians(deg) {
+        return deg * Math.PI / 180;
+      }
+      function haversineDistance(lat1, lon1, lat2, lon2) {
+        const R = 3958.8;
+        const dLat = toRadians(lat2 - lat1);
+        const dLon = toRadians(lon2 - lon1);
+        const a =
+          Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+          Math.cos(toRadians(lat1)) *
+            Math.cos(toRadians(lat2)) *
+            Math.sin(dLon / 2) *
+            Math.sin(dLon / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return R * c;
+      }
+      function updateAllDistances() {
+        if (!navigator.geolocation) {
+          console.error("Geolocation not supported.");
+          return;
+        }
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const lat1 = position.coords.latitude;
+            const lon1 = position.coords.longitude;
+            const buttons = document.querySelectorAll("[id^='distanceDisplay']");
+            buttons.forEach((btn) => {
+              const lat2 = parseFloat(btn.dataset.lat);
+              const lon2 = parseFloat(btn.dataset.lon);
+              const key = btn.dataset.key;
+
+              const distance = haversineDistance(lat1, lon1, lat2, lon2);
+              btn.textContent = `${distance.toFixed(2)} miles`;
+            });
+          },
+        );
+      }
+      window.onload = updateAllDistances;
+      setInterval(updateAllDistances, 10000);
+    </script>
   </body>
 </html>

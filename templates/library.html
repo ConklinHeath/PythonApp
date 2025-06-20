@@ -19,13 +19,20 @@
       <div class="flex flex-row space-x-4 flex-wrap">
         {% for key, value in libraries.items() %}
           <div class="relative group mb-4 inline-block">
-            <button class="library-button px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600" onclick="window.open('https://www.google.com/maps?q={{ value[1] }},{{ value[2] }}', '_blank')">{{ key }}</button>
+            <button id="distanceDisplay{{ loop.index }}"
+                    data-lat="{{ value[1] }}"
+                    data-lon="{{ value[2] }}"
+                    data-key="{{ key }}"
+                    class="library-button px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+                    onclick="window.open('https://www.google.com/maps?q={{ value[1] }},{{ value[2] }}', '_blank')">
+              {{ key }}: Loading...
+            </button>
             <div class="absolute left-0 mt-2 hidden group-hover:block bg-white border border-gray-300 p-2 rounded shadow-md z-10">
               {% for item in value[0] %}
-                {% if item == 'NONE' %}
+                {% if item['title'] == 'NONE' %}
                 <div class="text-sm text-gray-800 hover:text-black whitespace-nowrap bg-red-200">Unknown Book In Library</div>
                 {% else %}
-                <button class="text-sm text-gray-800 hover:text-black whitespace-nowrap">{{ item }}</button>
+                <button class="text-sm text-gray-800 hover:text-black whitespace-nowrap">{{ item['title'] }}</button>
                 {% endif %}
               {% endfor %}
             </div>
@@ -33,5 +40,46 @@
         {% endfor %}
       </div>
     </div>
+  <script>
+      function toRadians(deg) {
+        return deg * Math.PI / 180;
+      }
+      function haversineDistance(lat1, lon1, lat2, lon2) {
+        const R = 3958.8;
+        const dLat = toRadians(lat2 - lat1);
+        const dLon = toRadians(lon2 - lon1);
+        const a =
+          Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+          Math.cos(toRadians(lat1)) *
+            Math.cos(toRadians(lat2)) *
+            Math.sin(dLon / 2) *
+            Math.sin(dLon / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return R * c;
+      }
+      function updateAllDistances() {
+        if (!navigator.geolocation) {
+          console.error("Geolocation not supported.");
+          return;
+        }
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const lat1 = position.coords.latitude;
+            const lon1 = position.coords.longitude;
+            const buttons = document.querySelectorAll("[id^='distanceDisplay']");
+            buttons.forEach((btn) => {
+              const lat2 = parseFloat(btn.dataset.lat);
+              const lon2 = parseFloat(btn.dataset.lon);
+              const key = btn.dataset.key;
+
+              const distance = haversineDistance(lat1, lon1, lat2, lon2);
+              btn.textContent = `${key}: ${distance.toFixed(2)} miles`;
+            });
+          },
+        );
+      }
+      window.onload = updateAllDistances;
+      setInterval(updateAllDistances, 10000);
+    </script>
   </body>
 </html>
