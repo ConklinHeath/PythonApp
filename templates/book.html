@@ -21,6 +21,7 @@
           <tr>
             <th>Title</th>
             <th>Library</th>
+            <th>Distance</th>
           </tr>
         {% for key, value in libraries.items() %}
           {% for item in value[0] %}
@@ -38,13 +39,17 @@
                 <div class="group relative inline-block">
                   <button
                           onclick="window.open('https://www.google.com/maps?q={{ value[1] }},{{ value[2] }}', '_blank')"
-                          class="book-button text-black rounded hover:bg-green-600 p-1 text-sm text-gray-800 hover:text-black whitespace-nowrap">{{ key }}</button>
-                  <div
+                          class="book-button text-black rounded hover:bg-green-600 p-1 text-sm text-gray-800 hover:text-black whitespace-nowrap">{{ key }}
+                  </button>
+                </div>
+              </td>
+              <td>
+                <div
                           data-lat="{{ value[1] }}"
                           data-lon="{{ value[2] }}"
                           data-key="{{ key }}"
                           id="distanceDisplay{{ loop.index }}"
-                          class="absolute whitespace-nowrap left-0 mt-2 hidden group-hover:block bg-white border border-gray-300 p-2 rounded shadow-md z-10">Loading...</div>
+                          class="text-sm text-black whitespace-nowrap left-0 mt-2 z-10">Loading...
                 </div>
               </td>
             </tr>
