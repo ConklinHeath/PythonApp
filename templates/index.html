@@ -14,14 +14,20 @@
     <div class="flex flex-col items-center justify-center h-screen space-y-6">
       <h1 class="font-bold text-[20px]">Hello yall</h1>
         <div class="flex flex-row space-x-4">
-        <button class="LibraryView px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600" onclick="location.href='/Library'">
-          View All Libaries
+        <button class="relative inline-block px-6 py-3 rounded-full bg-green-500 font-semibold text-white transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-95 group"
+                onclick="location.href='/Library'">
+          <span class="relative z-10 text-black">View All Libaries</span>
+          <span class="absolute inset-0 m-auto bg-green-600 rounded-full opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)]"></span>
         </button>
-        <button class="BookView px-10 py-2 bg-green-500 text-white rounded hover:bg-green-600" onclick="location.href='/Books'">
-          View All Books
+        <button class="relative inline-block px-6 py-3 rounded-full bg-green-500 font-semibold text-white transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-95 group"
+                onclick="location.href='/Books'">
+          <span class="relative z-10 text-black">View All Books</span>
+          <span class="absolute inset-0 m-auto bg-green-600 rounded-full opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)]"></span>
         </button>
-        <button class="AddPic px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600" onclick="location.href='/Photo'">
-          Add Picture
+        <button class="relative inline-block px-6 py-3 rounded-full bg-green-500 font-semibold text-white transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-95 group"
+                onclick="location.href='/Photo'">
+          <span class="relative z-10 text-black">Add Picture</span>
+          <span class="absolute inset-0 m-auto bg-green-600 rounded-full opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)]"></span>
         </button>
       </div>
     </div>
