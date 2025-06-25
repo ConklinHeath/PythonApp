@@ -27,11 +27,13 @@
   </script>
   <div class="flex flex-col items-center justify-center h-screen space-y-6">
     <h1 class="font-bold text-[20px]">Add Photo</h1>
-      <button class="HomeView px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600" onclick="location.href='/'">
-        Back
-      </button>
+      <button class="relative inline-block px-6 py-3 rounded-full bg-green-500 font-semibold text-white active:scale-95 group"
+            onclick="location.href='/'">
+      <span class="relative z-10 text-black">Back</span>
+      <span class="absolute inset-0 m-auto bg-green-600 rounded-full opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)]"></span>
+    </button>
       <form action="/Photo" method="post" enctype="multipart/form-data">
-        <div class="flex flex-col">
+        <div class="flex flex-col bg-green-300 rounded p-1">
           <div class="bg-green-300 rounded p-1">
             <label class="bg-green-300" for="Library">Library Name: </label>
             <input class="bg-green-200" type="text" id="Library" name="Library" required>
@@ -44,7 +46,13 @@
         <br>
           <input type="hidden" name="latitude" id="latitude" required>
           <input type="hidden" name="longitude" id="longitude" required>
-        <input class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600" type="submit" id="submit">
+          <div class="relative inline-block px-6 py-3 rounded-full bg-green-500 font-semibold text-black transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-95 group overflow-hidden">
+          <input
+            type="submit"
+            id="submit"
+            class="hover:cursor-pointer relative z-10 bg-transparent border-none text-black text-center cursor-pointer w-full h-full">
+          <span class="absolute inset-0 m-auto bg-green-600 rounded-full opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-125 transition-all duration-1000 ease-[cubic-bezier(0.23,1,0.32,1)] z-0"></span>
+          </div>
         </div>
       </form>
     </div>

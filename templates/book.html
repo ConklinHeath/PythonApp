@@ -52,13 +52,15 @@
                 </div>
               </td>
               <td>
-                <div
-                          data-lat="{{ value[1] }}"
-                          data-lon="{{ value[2] }}"
-                          data-key="{{ key }}"
-                          id="distanceDisplay{{ loop.index }}"
-                          class="text-sm text-black whitespace-nowrap left-0 mt-2 z-10">Loading...
-                </div>
+                <button id="distanceDisplay{{ loop.index }}"
+                    data-lat="{{ value[1] }}"
+                    data-lon="{{ value[2] }}"
+                    data-key="{{ key }}"
+                    class="relative inline-block px-1 py-1 rounded bg-green-300 font-semibold text-black transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-95 group"
+                    onclick="window.open('https://www.google.com/maps?q={{ value[1] }},{{ value[2] }}', '_blank')">
+              <span class="relative z-10 text-black distance-label">Loading...</span>
+              <span class="absolute inset-0 m-auto bg-green-600 rounded opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)]"></span>
+            </button>
               </td>
             </tr>
           {% endfor %}
@@ -99,7 +101,22 @@
               const key = btn.dataset.key;
 
               const distance = haversineDistance(lat1, lon1, lat2, lon2);
-              btn.textContent = `${distance.toFixed(2)} miles`;
+              const label = btn.querySelector('.distance-label');
+              if (label && !isNaN(distance)) {
+                label.classList.remove("text-green-800", "text-red-500", "text-yellow-500", "font-bold");
+                label.textContent = `${distance.toFixed(2)} miles`;
+                label.classList.add("font-bold");
+                if (distance < 1) {
+                  label.classList.add("text-green-800");
+                }
+                else if (distance < 5) {
+                  label.classList.add("text-yellow-500");
+                } else {
+                  label.classList.add("text-red-500")
+                }
+              } else if (label) {
+                label.textContent = `${key}: Distance unavailable`;
+              }
             });
           },
         );
