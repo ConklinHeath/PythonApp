@@ -7,6 +7,7 @@ import pygame
 import sys
 import File
 from PIL import Image
+from PIL import ImageOps
 import io
 from openai import OpenAI
 import base64
@@ -58,6 +59,10 @@ def photo():
         libraryForm = request.form.get("Library")
         file = request.files.get('PhotoDrop')
         image = Image.open(file.stream)
+        image = ImageOps.exif_transpose(image)  # Handle iOS camera rotation
+        image = ImageOps.exif_transpose(image)
+        max_size = (1024, 1024)
+        image.thumbnail(max_size, Image.Resampling.LANCZOS)
         image_path = "temp_uploaded_image.png"
         image.save(image_path)
 

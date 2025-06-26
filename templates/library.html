@@ -32,18 +32,20 @@
               <span class="absolute inset-0 m-auto bg-green-600 rounded opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)]"></span>
             </button>
             <div class="absolute left-0 max-h-0 mt-2 opacity-0 scale-95
-            group-hover:max-h-[999px]
-            group-hover:opacity-100 group-hover:scale-100
-            overflow-hidden pointer-events-none group-hover:pointer-events-auto
-            transition-[max-height,opacity,transform] duration-500 ease-out
-            bg-white border text-black p-2 rounded shadow-md z-10">
+  group-hover:max-h-[999px]
+  group-hover:opacity-100 group-hover:scale-100
+  overflow-hidden pointer-events-none group-hover:pointer-events-auto
+  transition-[max-height,opacity,transform] duration-500 ease-out
+  bg-white text-black p-2 rounded shadow-lg z-50
+  border border-gray-300">
+
 
               {% for item in value[0] %}
               {% set delay = loop.index * 90 %}
                 {% if item['title'] == 'NONE' %}
-                <div class="text-sm text-black hover:text-black whitespace-nowrap bg-red-200">Unknown Book In Library</div>
+                <div class="z-10 text-sm text-black hover:text-black whitespace-nowrap bg-red-200">Unknown Book In Library</div>
                 {% else %}
-                <button class="text-sm text-black hover:text-black whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-[{{ delay }}ms]">
+                <button class="z-10 text-sm text-black hover:text-black whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-[{{ delay }}ms]">
                   {{ item['title'] }}
                 </button>
                 <br>
