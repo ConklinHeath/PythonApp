@@ -91,14 +91,14 @@
               const distance = haversineDistance(lat1, lon1, lat2, lon2);
               const label = btn.querySelector('.distance-label');
               if (label && !isNaN(distance)) {
-                label.classList.remove("text-green-800", "text-red-500", "text-yellow-500", "font-bold");
+                label.classList.remove("text-green-800", "text-red-500", "text-orange-500", "font-bold");
                 label.textContent = `${distance.toFixed(2)} miles`;
                 label.classList.add("font-bold");
-                if (distance < 1) {
+                if (distance < 0.5) {
                   label.classList.add("text-green-800");
                 }
                 else if (distance < 5) {
-                  label.classList.add("text-yellow-500");
+                  label.classList.add("text-orange-500");
                 } else {
                   label.classList.add("text-red-500")
                 }
